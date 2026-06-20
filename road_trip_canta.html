@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Road Trip Canta · Playbook 2026</title>
+<style>
+:root {
+  --verde:  #2D6A4F; --verde2: #52B788; --verde3: #D8F3DC;
+  --dorado: #B5882A; --dorado2:#FFF3CD;
+  --piedra: #8B7355; --piedra2:#F5F0E8;
+  --terra:  #C1440E; --terra2: #FDE8E0;
+  --azul:   #1A6B8A; --azul2:  #E0F2F8;
+  --morado: #5B4A8A; --fondo:  #F5F0E8; --gris: #5A5A5A;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--fondo);color:#1E1E1E;line-height:1.55}
+
+.hero{background:linear-gradient(160deg,#0f2d1e,#1a4a32 40%,#2D6A4F);color:white;padding:36px 20px 28px;text-align:center}
+.hero h1{font-size:clamp(20px,5vw,38px);font-weight:800;margin-bottom:5px}
+.hero .sub{font-size:14px;opacity:.8;margin-bottom:14px}
+.pills{display:flex;gap:7px;justify-content:center;flex-wrap:wrap}
+.pill{background:rgba(255,255,255,.13);border:1px solid rgba(255,255,255,.25);border-radius:20px;padding:3px 12px;font-size:11px}
+
+.tabs{display:flex;background:white;border-bottom:2px solid #e8e4dc;padding:0 12px;position:sticky;top:0;z-index:100;overflow-x:auto;scrollbar-width:none;box-shadow:0 2px 8px rgba(0,0,0,.07)}
+.tabs::-webkit-scrollbar{display:none}
+.tab{padding:12px 15px;font-size:13px;font-weight:600;color:var(--gris);border:none;background:none;cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-2px;white-space:nowrap;transition:all .2s}
+.tab:hover{color:var(--verde)}
+.tab.active{color:var(--verde);border-bottom-color:var(--verde)}
+
+.content{display:none;max-width:900px;margin:0 auto;padding:18px 13px 60px}
+.content.active{display:block}
+
+/* CORRIDOR */
+.corridor{background:white;border-radius:14px;padding:18px;margin-bottom:20px;box-shadow:0 2px 8px rgba(0,0,0,.07);overflow-x:auto}
+.corridor h3{font-size:13px;color:var(--gris);font-weight:600;margin-bottom:12px}
+.cline{display:flex;align-items:center;min-width:680px}
+.cstop{display:flex;flex-direction:column;align-items:center;gap:3px;flex-shrink:0}
+.cdot{width:13px;height:13px;border-radius:50%;background:var(--verde);border:2px solid white;box-shadow:0 0 0 2px var(--verde)}
+.cdot.lima{background:#444;box-shadow:0 0 0 2px #444}
+.cdot.gem{background:var(--dorado);box-shadow:0 0 0 2px var(--dorado)}
+.cdot.food{background:var(--terra);box-shadow:0 0 0 2px var(--terra)}
+.cdot.camp{background:var(--morado);box-shadow:0 0 0 2px var(--morado)}
+.clabel{font-size:9px;font-weight:700;color:var(--gris);text-align:center;max-width:58px;line-height:1.2}
+.cseg{height:3px;background:linear-gradient(to right,var(--verde2),var(--verde));flex:1;min-width:28px;position:relative}
+.cseg-lbl{position:absolute;top:-13px;left:50%;transform:translateX(-50%);font-size:9px;color:#bbb;white-space:nowrap}
+
+/* ZONE */
+.zone-hdr{display:flex;align-items:center;gap:8px;margin:24px 0 10px}
+.zline{flex:1;height:1px;background:#e0d8c8}
+.ztitle{font-size:10px;font-weight:800;letter-spacing:1.4px;text-transform:uppercase;color:var(--verde);white-space:nowrap;padding:0 6px}
+.zdist{font-size:10px;color:var(--gris);white-space:nowrap;padding:2px 9px;background:var(--verde3);border-radius:9px}
+
+/* ACTIVITY CARDS */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(255px,1fr));gap:11px;margin-bottom:4px}
+.ac{background:white;border-radius:12px;padding:13px 15px;box-shadow:0 1px 4px rgba(0,0,0,.07);border-left:3px solid var(--verde2);transition:box-shadow .2s}
+.ac:hover{box-shadow:0 3px 12px rgba(0,0,0,.12)}
+.ac.reco{border-left-color:var(--verde)}
+.ac.gem{border-left-color:var(--dorado)}
+.ac.food{border-left-color:var(--terra)}
+.ac.opt{border-left-color:#ddd;opacity:.82}
+.ac.notrk{border-left-color:#f59e0b;background:#fffbeb}
+.act{display:flex;align-items:flex-start;gap:8px;margin-bottom:5px}
+.aci{font-size:19px;flex-shrink:0;margin-top:1px}
+.acm{flex:1}
+.acn{font-size:13px;font-weight:700;line-height:1.3}
+.acs{font-size:10px;color:var(--gris);margin-top:2px}
+.acd{font-size:12px;color:#555;line-height:1.5;margin-bottom:7px}
+.acf{display:flex;align-items:center;gap:5px;flex-wrap:wrap}
+.tt{font-size:11px;font-weight:700;color:var(--verde);background:var(--verde3);border-radius:7px;padding:2px 7px}
+.ty{font-size:11px;font-weight:600;border-radius:7px;padding:2px 7px}
+.ty.nat{background:#e8f5e9;color:#2e7d32}
+.ty.cult{background:#ede7f6;color:#5b4a8a}
+.ty.food{background:var(--terra2);color:var(--terra)}
+.ty.foto{background:#fff8e1;color:#f57f17}
+.ty.hike{background:#e3f2fd;color:#1565c0}
+.badge{font-size:10px;font-weight:700;border-radius:6px;padding:2px 6px}
+.badge.r{background:var(--verde);color:white}
+.badge.g{background:var(--dorado);color:white}
+.badge.t{background:#fee2e2;color:#b91c1c}
+.badge.nt{background:#d1fae5;color:#065f46}
+.badge.dom{background:#ede7f6;color:#5b4a8a}
+.mbtn{margin-left:auto;font-size:11px;font-weight:600;color:var(--azul);text-decoration:none;background:var(--azul2);border-radius:7px;padding:3px 9px;white-space:nowrap}
+.mbtn:hover{background:#c5e8f5}
+
+/* PATH BOXES */
+.pbox{border-radius:13px;padding:14px 18px;margin-bottom:18px;border:2px dashed}
+.pbox.sat{background:#f0faf5;border-color:var(--verde2)}
+.pbox.sun{background:#f0f6ff;border-color:var(--azul)}
+.ptitle{font-size:13px;font-weight:800;margin-bottom:9px;display:flex;align-items:center;gap:7px}
+.pstops{display:flex;align-items:center;gap:4px;flex-wrap:wrap}
+.ps{font-size:12px;font-weight:600;background:white;border-radius:6px;padding:3px 8px;box-shadow:0 1px 3px rgba(0,0,0,.07)}
+.pa{font-size:13px;color:#bbb}
+.pnote{font-size:12px;color:var(--gris);margin-top:9px;font-style:italic}
+
+/* TIPS */
+.tip{display:flex;gap:9px;background:white;border-radius:9px;padding:11px 15px;margin-bottom:9px;box-shadow:0 1px 3px rgba(0,0,0,.05);border-left:3px solid var(--dorado);font-size:13px}
+.tip.g{border-left-color:var(--verde)}
+.tip.r{border-left-color:var(--terra)}
+.ti{font-size:15px;flex-shrink:0}
+
+/* ROUTE BTNS */
+.rbtnrow{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+.rbtn{display:inline-flex;align-items:center;gap:5px;padding:8px 15px;border-radius:8px;font-size:13px;font-weight:600;text-decoration:none;color:white}
+.rbtn.g{background:var(--verde)}
+.rbtn.b{background:var(--azul)}
+.rbtn.d{background:var(--dorado)}
+.rbtn:hover{opacity:.85}
+
+/* CULTURA CARDS */
+.lc{background:white;border-radius:14px;overflow:hidden;margin-bottom:14px;box-shadow:0 2px 8px rgba(0,0,0,.07)}
+.lh{padding:13px 17px;display:flex;align-items:center;gap:11px;cursor:pointer;user-select:none}
+.lhi{font-size:21px}
+.lht{flex:1}
+.lht h3{font-size:15px;font-weight:700;line-height:1.3}
+.lht p{font-size:11px;color:var(--gris);margin-top:2px}
+.lhv{font-size:15px;color:#ccc;transition:transform .3s}
+.lc.open .lhv{transform:rotate(180deg)}
+.lb{display:none;border-top:1px solid #f0ebe0;padding:13px 17px}
+.lc.open .lb{display:block}
+
+.lsec{border-radius:9px;overflow:hidden;margin:9px 0}
+.lshd{padding:8px 13px;font-size:13px;font-weight:700;color:white}
+.lsbody{background:#fafaf7;padding:11px 13px;font-size:13px;color:#444;line-height:1.6}
+.lsbody p{margin-bottom:8px}
+.lsbody p:last-child{margin-bottom:0}
+.src{font-size:11px;color:#aaa;font-style:italic;margin-top:5px}
+
+.atrac-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px;margin:9px 0}
+.atrac{background:#f8f9fa;border-radius:8px;padding:10px 12px;font-size:12px}
+.atrac strong{display:block;margin-bottom:3px;font-size:13px;color:var(--verde)}
+
+.plato{display:flex;gap:10px;background:var(--terra2);border-radius:9px;padding:10px 13px;margin:9px 0;align-items:flex-start}
+.plato-emoji{font-size:22px;flex-shrink:0}
+.plato-txt strong{display:block;font-size:13px;font-weight:700;color:var(--terra);margin-bottom:3px}
+.plato-txt span{font-size:12px;color:#555}
+
+/* FOOD */
+.food-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:11px}
+.fcard{background:white;border-radius:12px;padding:13px;box-shadow:0 1px 4px rgba(0,0,0,.07);border-top:3px solid var(--terra)}
+.fcard.verde{border-top-color:var(--verde)}
+.fn{font-size:14px;font-weight:700;margin-bottom:4px}
+.fd{font-size:12px;color:var(--gris);line-height:1.5}
+.fp{font-size:12px;font-weight:700;color:var(--terra);margin-top:5px}
+
+/* CHECKLIST */
+.cs{margin-bottom:16px}
+.ct{font-size:13px;font-weight:700;color:var(--verde);margin-bottom:7px}
+.cg{display:grid;grid-template-columns:repeat(auto-fill,minmax(215px,1fr));gap:5px}
+.ci{display:flex;align-items:flex-start;gap:8px;background:white;border-radius:7px;padding:8px 11px;font-size:13px;cursor:pointer;transition:background .15s;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+.ci:hover{background:var(--verde3)}
+.ci input{margin-top:1px;accent-color:var(--verde);width:14px;height:14px;flex-shrink:0;cursor:pointer}
+.ci.done{opacity:.42;text-decoration:line-through}
+
+.sec-title{font-size:16px;font-weight:800;color:var(--verde);border-bottom:2px solid var(--verde3);padding-bottom:6px;margin:20px 0 12px}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div style="font-size:42px;margin-bottom:5px">🏔️</div>
+  <h1>Road Trip Canta · Playbook</h1>
+  <div class="sub">Lima ↔ Obrajillo ↔ Cordillera de La Viuda · 20–21 junio 2026</div>
+  <div class="pills">
+    <span class="pill">🏕️ Camping Rumichaca · 992353090</span>
+    <span class="pill">🚗 ~2h 30min desde Lima</span>
+    <span class="pill">📐 Framework modular — no es horario fijo</span>
+  </div>
+</div>
+
+<div class="tabs">
+  <button class="tab active" onclick="showTab('framework',this)">📐 Framework</button>
+  <button class="tab" onclick="showTab('cultura',this)">📍 Guías de Lugar</button>
+  <button class="tab" onclick="showTab('gastro',this)">🍽️ Gastronomía</button>
+  <button class="tab" onclick="showTab('checklist',this)">✅ Checklist</button>
+</div>
+
+<!-- ══ FRAMEWORK ══ -->
+<div id="tab-framework" class="content active">
+
+  <div class="corridor">
+    <h3>🗺️ Corredor Lima ↔ Canta · todos los pueblos en ruta</h3>
+    <div class="cline">
+      <div class="cstop"><div class="cdot lima"></div><div class="clabel">Lima</div></div>
+      <div class="cseg"><span class="cseg-lbl">~50 km</span></div>
+      <div class="cstop"><div class="cdot food"></div><div class="clabel">Yaso ☕</div></div>
+      <div class="cseg"><span class="cseg-lbl">~20 km</span></div>
+      <div class="cstop"><div class="cdot"></div><div class="clabel">Canta</div></div>
+      <div class="cseg"><span class="cseg-lbl">3 km</span></div>
+      <div class="cstop"><div class="cdot camp"></div><div class="clabel">Obrajillo 🏕️</div></div>
+      <div class="cseg" style="background:linear-gradient(to right,#52B788,#1A6B8A)"><span class="cseg-lbl">↑ altura</span></div>
+      <div class="cstop"><div class="cdot gem"></div><div class="clabel">Cantamarca ⭐</div></div>
+      <div class="cseg" style="background:linear-gradient(to right,#1A6B8A,#5B4A8A)"><span class="cseg-lbl">4000+ m</span></div>
+      <div class="cstop"><div class="cdot food"></div><div class="clabel">Cullhuay 🍲</div></div>
+      <div class="cseg" style="background:linear-gradient(to right,#5B4A8A,#3a2a6a)"><span class="cseg-lbl">lagunas</span></div>
+      <div class="cstop"><div class="cdot gem"></div><div class="clabel">Laguna 7C + Chuchún</div></div>
+    </div>
+  </div>
+
+  <div class="rbtnrow">
+    <a class="rbtn g" href="https://www.google.com/maps/dir/Lima+Peru/Yaso+Canta+Lima+Peru/Canta+Lima+Peru/Obrajillo+Canta+Lima+Peru/Cantamarca+Canta+Lima+Peru/Cullhuay+Huaros+Canta+Lima+Peru/Laguna+de+los+7+Colores+Canta+Lima/Obrajillo+Canta+Lima+Peru" target="_blank">📍 Ruta Sábado</a>
+    <a class="rbtn b" href="https://www.google.com/maps/dir/Obrajillo+Canta+Lima+Peru/Cascada+de+Lucle+Obrajillo+Canta/Canta+Lima+Peru/Lima+Peru" target="_blank">📍 Ruta Domingo</a>
+    <a class="rbtn d" href="https://www.google.com/maps/dir/Lima+Peru/Yaso+Canta+Lima/Obrajillo+Canta+Lima/Cullhuay+Huaros+Canta+Lima/Laguna+7+Colores+Canta+Lima/Laguna+Chuchun+Huaros+Canta/Cascada+Lucle+Obrajillo+Canta/Canta+Lima+Peru/Lima+Peru" target="_blank">🗺️ 2 días completo</a>
+  </div>
+
+  <!-- RUTAS RECOMENDADAS -->
+  <div class="pbox sat">
+    <div class="ptitle">⭐ Sábado — ruta recomendada</div>
+    <div class="pstops">
+      <span class="ps">🚗 Lima 6am</span><span class="pa">→</span>
+      <span class="ps">☕ Yaso (desayuno)</span><span class="pa">→</span>
+      <span class="ps">🏛️ Cantamarca</span><span class="pa">→</span>
+      <span class="ps">🍲 Cullhuay (almuerzo)</span><span class="pa">→</span>
+      <span class="ps">🎨 Laguna 7 Colores</span><span class="pa">→</span>
+      <span class="ps">🌊 Laguna Chuchún</span><span class="pa">→</span>
+      <span class="ps">🌊 Cascada Pomora</span><span class="pa">→</span>
+      <span class="ps">🏕️ Camping (tarde)</span>
+    </div>
+    <div class="pnote">El camping es el destino final del sábado, no la base de operaciones. Llegas después de un día completo en la cordillera y lo primero que haces es descansar, no cargar cosas.</div>
+  </div>
+
+  <div class="pbox sun">
+    <div class="ptitle" style="color:var(--azul)">⭐ Domingo — ruta recomendada</div>
+    <div class="pstops">
+      <span class="ps">☀️ Desayuno Obrajillo</span><span class="pa">→</span>
+      <span class="ps">🌊 Cascada de Lucle</span><span class="pa">→</span>
+      <span class="ps">📦 Recoger camping</span><span class="pa">→</span>
+      <span class="ps">🛒 Canta (mercado dom)</span><span class="pa">→</span>
+      <span class="ps">🚗 Bajar por Yaso</span><span class="pa">→</span>
+      <span class="ps">🍔 Smash N' Go · Lima</span>
+    </div>
+    <div class="pnote" style="color:var(--azul)">Lucle es corta y cerca — perfecta para la mañana sin apuro. Sal de Canta antes de las 12:30 para llegar a Lima a la hora de almuerzo.</div>
+  </div>
+
+  <!-- ZONA 1 -->
+  <div class="zone-hdr">
+    <div class="zline"></div><div class="ztitle">Zona 1 · Lima → Valle del Chillón</div>
+    <div class="zdist">0 – 70 km · hasta 1h 45min</div><div class="zline"></div>
+  </div>
+
+  <div class="tip">
+    <div class="ti">🚗</div>
+    <div>Panamericana Norte → Av. Túpac Amaru → Puente Piedra → Carabayllo → desvío valle del Chillón. La carretera sube suavemente. <strong>Llena el tanque en Lima</strong> — no hay grifos en ruta alta.</div>
+  </div>
+
+  <div class="grid">
+    <div class="ac reco">
+      <div class="act"><div class="aci">☕</div>
+        <div class="acm"><div class="acn">Yaso — El pueblo de los 100 balcones</div>
+        <div class="acs">Km ~50 · en ruta directa · sin desvío</div></div></div>
+      <div class="acd">Parada para desayuno en el camino. Yaso tiene arquitectura colonial y republicana con balcones de madera intactos que le dan un aspecto de pueblo suspendido en el tiempo. Los tamales canteños y el chicharrón con camote son el desayuno local. Todo sobre la carretera principal.</div>
+      <div class="acf">
+        <span class="tt">⏱ 30–45 min</span>
+        <span class="ty cult">cultura</span>
+        <span class="ty food">desayuno</span>
+        <span class="badge r">⭐ En ruta</span>
+        <a class="mbtn" href="https://www.google.com/maps/search/Yaso+Canta+Lima+Peru" target="_blank">📍 Maps</a>
+      </div>
+    </div>
+
+    <div class="ac opt">
+      <div class="act"><div class="aci">🌸</div>
+        <div class="acm"><div class="acn">Arahuay — si el tiempo sobra</div>
+        <div class="acs">~20 min desvío desde Yangas · 2,650 msnm</div></div></div>
+      <div class="acd">Pueblo de las flores con microclima templado. Queso artesanal y mermeladas andinas. Bello, pero requiere salirte de la ruta ~20 min por lado. Recomendable solo si saliste muy temprano y llevas tiempo de sobra.</div>
+      <div class="acf">
+        <span class="tt">⏱ 45–60 min + desvío</span>
+        <span class="ty nat">naturaleza</span>
+        <span class="badge" style="background:#ddd;color:#555">Desvío</span>
+        <a class="mbtn" href="https://www.google.com/maps/place/Arahuay" target="_blank">📍 Maps</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ZONA 2 -->
+  <div class="zone-hdr">
+    <div class="zline"></div><div class="ztitle">Zona 2 · Canta & Obrajillo</div>
+    <div class="zdist">Km 105–108 · 2,600–2,750 msnm</div><div class="zline"></div>
+  </div>
+
+  <div class="grid">
+    <div class="ac">
+      <div class="act"><div class="aci">⛪</div>
+        <div class="acm"><div class="acn">Canta Centro</div>
+        <div class="acs">Plaza de Armas · Iglesia colonial 1540</div></div></div>
+      <div class="acd">Parada rápida al pasar. La iglesia es del siglo XVII, la plaza tiene vida local. Los domingos hay mercado con queso serrano y chicharrón de cuy. Si tienes hambre aquí, la trucha en los restaurantes del río es muy buena.</div>
+      <div class="acf">
+        <span class="tt">⏱ 20–45 min</span>
+        <span class="ty cult">cultura</span>
+        <a class="mbtn" href="https://www.google.com/maps/search/Plaza+de+Armas+Canta+Lima" target="_blank">📍 Maps</a>
+      </div>
+    </div>
+
+    <div class="ac camp" style="border-left-color:var(--morado)">
+      <div class="act"><div class="aci">🏕️</div>
+        <div class="acm"><div class="acn">Camping Rumichaca — llegada nocturna</div>
+        <div class="acs">Obrajillo · Final del sábado</div></div></div>
+      <div class="acd">Tu base para dormir — llegas aquí al final del día, después de la cordillera. Tiene piscinas del río, tobogán de piedra, zona de fogata e Intipunku (Portada del Sol). Llama antes para confirmar: 992353090. Precio: S/15/persona.</div>
+      <div class="acf">
+        <span class="tt">⏱ Llegada tarde sábado</span>
+        <span class="ty nat">camping</span>
+        <span class="badge" style="background:var(--morado);color:white">🔥 Final del día</span>
+        <a class="mbtn" href="https://maps.app.goo.gl/gEbiQmph5zZjWpby8" target="_blank">📍 Maps</a>
+      </div>
+    </div>
+
+    <div class="ac reco">
+      <div class="act"><div class="aci">🌊</div>
+        <div class="acm"><div class="acn">Cascada de Lucle — domingo mañana</div>
+        <div class="acs">Cerca de Obrajillo · Río Chillón</div></div></div>
+      <div class="acd">Cascada accesible sin trekking intenso, a minutos de Obrajillo. La base forma pozas naturales del río Chillón perfectas para mojarse los pies (o más si el día calienta). Ideal para el domingo por la mañana antes de recoger el campamento.</div>
+      <div class="acf">
+        <span class="tt">⏱ 1–1.5h</span>
+        <span class="ty nat">naturaleza</span>
+        <span class="badge r">⭐ Dom mañana</span>
+        <a class="mbtn" href="https://www.google.com/maps/search/Cascada+de+Lucle+Obrajillo+Canta" target="_blank">📍 Maps</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ZONA 3 -->
+  <div class="zone-hdr">
+    <div class="zline"></div><div class="ztitle">Zona 3 · Montaña Alta</div>
+    <div class="zdist">3,660 – 4,800 msnm · llevar abrigo siempre</div><div class="zline"></div>
+  </div>
+
+  <div class="tip r">
+    <div class="ti">⚠️</div>
+    <div><strong>Altitud:</strong> A partir de 3,500 msnm puede aparecer soroche. Sube despacio, hidrátate, lleva mate de coca. Si sientes dolor de cabeza intenso o náuseas fuertes, baja sin forzar.</div>
+  </div>
+
+  <div class="grid">
+    <div class="ac gem">
+      <div class="act"><div class="aci">🏛️</div>
+        <div class="acm"><div class="acn">Cantamarca — Ciudadela Atavillos</div>
+        <div class="acs">17 km de Canta · 3,660 msnm · ingreso libre</div></div></div>
+      <div class="acd">Capital del curacazgo Atavillos (1100–1450 d.C.). Estructuras circulares pre-incas + 24 colcas incas. El contraste arquitectónico es visible a simple vista. Patrimonio Cultural desde 2006. El auto llega hasta la carretera — desde ahí hay ~1.5 km de sendero cuesta arriba.</div>
+      <div class="acf">
+        <span class="tt">⏱ 3–4h total</span>
+        <span class="ty cult">cultura</span>
+        <span class="ty hike">trekking</span>
+        <span class="badge g">⭐ Hidden gem</span>
+        <span class="badge t">🥾 1h subida · difícil</span>
+        <a class="mbtn" href="https://www.google.com/maps/search/Cantamarca+Canta+Lima" target="_blank">📍 Maps</a>
+      </div>
+    </div>
+
+    <div class="ac notrk">
+      <div class="act"><div class="aci">🚗</div>
+        <div class="acm"><div class="acn">Si saltas Cantamarca</div>
+        <div class="acs">Alternativas sin trekking · mismo tiempo</div></div></div>
+      <div class="acd"><strong>① Canta a fondo (45 min):</strong> plaza, iglesia, mercado — todo plano.<br><strong>② Miradores en carretera (15 min):</strong> paras en ensanchamientos hacia Huaros, fotos del cañón, sigues.<br><strong>③ Más tiempo en Cullhuay + lagunas:</strong> sin prisa, ves el cambio de colores de la laguna.</div>
+      <div class="acf">
+        <span class="tt">⏱ Según combinación</span>
+        <span class="badge nt">✅ Sin trekking</span>
+      </div>
+    </div>
+
+    <div class="ac food">
+      <div class="act"><div class="aci">🍲</div>
+        <div class="acm"><div class="acn">Cullhuay — Almuerzo a 4,050 msnm</div>
+        <div class="acs">Pueblo de acceso a las lagunas</div></div></div>
+      <div class="acd">Cullhuay es el pueblo-puerta de las lagunas. Tiene puestos comunales con caldo de cordero caliente y trucha frita. Comer aquí antes de subir a 4,800 msnm es la mejor idea — llevas el estómago lleno y el cuerpo caliente.</div>
+      <div class="acf">
+        <span class="tt">⏱ 30–45 min</span>
+        <span class="ty food">comida</span>
+        <span class="badge r">⭐ Almuerzo sab</span>
+        <a class="mbtn" href="https://www.google.com/maps/search/Cullhuay+Huaros+Canta+Lima" target="_blank">📍 Maps</a>
+      </div>
+    </div>
+
+    <div class="ac reco">
+      <div class="act"><div class="aci">🎨</div>
+        <div class="acm"><div class="acn">Laguna de los 7 Colores (Calancayo)</div>
+        <div class="acs">4,800 msnm · Cordillera de La Viuda</div></div></div>
+      <div class="acd">Los colores cambian con el ángulo del sol durante el día: turquesa, verde, azul, añil. Vista directa al Nevado de La Viuda (5,140 msnm). Quédate 30–40 min para ver la paleta. Puede hacer 5°C de día.</div>
+      <div class="acf">
+        <span class="tt">⏱ 1–1.5h</span>
+        <span class="ty nat">naturaleza</span>
+        <span class="ty foto">foto</span>
+        <span class="badge r">⭐ Reco</span>
+        <a class="mbtn" href="https://maps.app.goo.gl/FxcDLgTwx9M4jnY3A" target="_blank">📍 Maps</a>
+      </div>
+    </div>
+
+    <div class="ac gem">
+      <div class="act"><div class="aci">🌊</div>
+        <div class="acm"><div class="acn">Laguna Chuchún</div>
+        <div class="acs">Vista directa Nevado de La Viuda</div></div></div>
+      <div class="acd">El nevado se refleja en el agua en días despejados (junio suele estarlo). Más tranquila que Calancayo. Puedes visitar ambas en el mismo bloque de tiempo ya que están cerca.</div>
+      <div class="acf">
+        <span class="tt">⏱ 45–60 min</span>
+        <span class="ty nat">naturaleza</span>
+        <span class="badge g">⭐ Hidden gem</span>
+        <a class="mbtn" href="https://www.google.com/maps/search/Laguna+Chuchun+Huaros+Canta" target="_blank">📍 Maps</a>
+      </div>
+    </div>
+
+    <div class="ac reco">
+      <div class="act"><div class="aci">🌊</div>
+        <div class="acm"><div class="acn">Cascada de Pomora "Las Mellizas"</div>
+        <div class="acs">Km 137 · 4,000 msnm · desde carretera</div></div></div>
+      <div class="acd">10 m de caída en 8 cascadas, 4 visibles desde la vía. Aguas del deshielo del Nevado Colac. No requiere trekking — se ve desde el auto y caminas 5–10 min en llano hasta el pie. Llamas y alpacas cerca.</div>
+      <div class="acf">
+        <span class="tt">⏱ 30–45 min</span>
+        <span class="ty nat">naturaleza</span>
+        <span class="ty foto">foto</span>
+        <span class="badge nt">✅ Sin trekking</span>
+        <a class="mbtn" href="https://maps.app.goo.gl/CrJxQjmCYr1DyiCt7" target="_blank">📍 Maps</a>
+      </div>
+    </div>
+
+    <div class="ac gem">
+      <div class="act"><div class="aci">🌵</div>
+        <div class="acm"><div class="acn">Puyas de Raimondi — Jaramajón</div>
+        <div class="acs">Cerca de Huaros · Dom AM ideal</div></div></div>
+      <div class="acd">La planta con la inflorescencia más grande del mundo. Vive hasta 100 años, florece UNA vez (10 m) y muere. Colonia rara cerca de Lima, casi sin visitantes. Si tienes tiempo el domingo antes de bajar, es un desvío que vale.</div>
+      <div class="acf">
+        <span class="tt">⏱ 1h</span>
+        <span class="ty nat">naturaleza</span>
+        <span class="badge g">⭐ Hidden gem</span>
+        <a class="mbtn" href="https://www.google.com/maps/search/Puyas+Raimondi+Jaramajon+Huaros+Canta" target="_blank">📍 Maps</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ZONA 4 REGRESO -->
+  <div class="zone-hdr">
+    <div class="zline"></div><div class="ztitle">Zona 4 · Regreso Domingo · Canta → Lima</div>
+    <div class="zdist">~2h 30min sin paradas</div><div class="zline"></div>
+  </div>
+
+  <div class="grid">
+    <div class="ac food">
+      <div class="act"><div class="aci">🍔</div>
+        <div class="acm"><div class="acn">Smash N' Go — Lima</div>
+        <div class="acs">Meta final del domingo · almuerzo de remate</div></div></div>
+      <div class="acd">Tu destino elegido para cerrar el viaje. Sale de Canta/Obrajillo a las 11–12, llegas en Lima entre 1:30–2:30 pm — hora perfecta. Un smash burger después de 2 días de trucha, altura y fogata.</div>
+      <div class="acf">
+        <span class="tt">⏱ Meta dom</span>
+        <span class="ty food">comida</span>
+        <span class="badge r">🍔 Destino</span>
+        <a class="mbtn" href="https://maps.app.goo.gl/fxCkSBshexirmhSK7" target="_blank">📍 Maps</a>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-top:18px">
+    <div class="tip g"><div class="ti">💡</div><div><strong>Lógica del framework:</strong> Cada zona tiene sus opciones. Si algo toma más de lo esperado, simplemente saltas una tarjeta y pasas a la siguiente zona. El orden dentro de cada zona también es flexible — no hay horario fijo, solo bloques.</div></div>
+    <div class="tip"><div class="ti">⏱️</div><div><strong>Tiempo orientativo:</strong> Zona 1 (Yaso) ~45 min · Zona 2 (Canta+Obrajillo) ~1h · Zona 3 (todo) ~5–6h · Regreso ~2.5h. El sábado tienes ~11–12h de movimiento desde Lima.</div></div>
+  </div>
+</div>
+
+<!-- ══ GUÍAS DE LUGAR ══ -->
+<div id="tab-cultura" class="content">
+
+  <div class="tip g" style="margin-bottom:14px"><div class="ti">📖</div><div>Cada lugar tiene su guía completa: qué ver, historia verificada con fuentes, leyendas locales y plato bandera. Expande la que necesites.</div></div>
+
+  <!-- YASO -->
+  <div class="lc open" id="l-yaso">
+    <div class="lh" onclick="toggleCard('l-yaso')">
+      <div class="lhi">☕</div>
+      <div class="lht">
+        <h3>Yaso — "El Pueblo de los 100 Balcones" <span style="background:#FFF3CD;color:#B5882A;font-size:10px;padding:1px 7px;border-radius:6px;font-weight:700;margin-left:4px">EN RUTA</span></h3>
+        <p>Km ~50 · Valle del Chillón · En la carretera directa Lima–Canta · <a href="https://www.google.com/maps/search/Yaso+Canta+Lima+Peru" target="_blank" onclick="event.stopPropagation()" style="color:var(--azul);font-weight:600">📍 Maps</a></p>
+      </div>
+      <div class="lhv">▼</div>
+    </div>
+    <div class="lb">
+      <div class="plato">
+        <div class="plato-emoji">🫔</div>
+        <div class="plato-txt">
+          <strong>Plato bandera: Tamales canteños + Chicharrón con camote</strong>
+          <span>Los tamales de Canta son diferentes a los limeños: masa de maíz más densa, relleno de pollo o cerdo con ají panca. El chicharrón con camote dorado es el desayuno del camino. Pide todo en los puestos al borde de la carretera — S/8–12 el combo.</span>
+        </div>
+      </div>
+      <div class="atrac-grid">
+        <div class="atrac"><strong>🏛️ Arquitectura colonial</strong>Balcones de madera del s. XIX que sobresalen sobre la vía. La mayoría aún habitados, no son decoración turística.</div>
+        <div class="atrac"><strong>📸 Foto stop</strong>Las fachadas blancas con ventanas de arco y balcones oscuros crean un contraste fotogénico. Mejor luz: mañana.</div>
+        <div class="atrac"><strong>☕ Desayuno en ruta</strong>Parada ideal km 50. Hay varios puestos con tamales frescos, café de olla y fruta andina.</div>
+      </div>
+      <div class="lsec">
+        <div class="lshd" style="background:var(--verde)">📚 Históricamente preciso</div>
+        <div class="lsbody">
+          <p>Yaso es una localidad del distrito de Canta, en el valle del río Chillón. La arquitectura de balcones volados que caracteriza al pueblo corresponde al estilo mestizo republicano del siglo XIX: técnica constructiva de madera (quishuar y aliso andino) que los constructores locales adaptaron del modelo colonial hispano de balcón corrido.</p>
+          <p>El valle del Chillón fue uno de los ejes de comunicación entre Lima y la sierra desde tiempos prehispánicos. Los Atavillos y luego los Incas usaron este corredor para el intercambio de productos entre la costa y los Andes. La carretera moderna sigue la misma ruta de los antiguos caminos.</p>
+          <p class="src">Fuente: Rostworowski, M. (1978). Señoríos indígenas de Lima y Canta. IEP, Lima.</p>
+        </div>
+      </div>
+      <div class="lsec">
+        <div class="lshd" style="background:var(--dorado)">🌙 Lo que se cuenta</div>
+        <div class="lsbody">
+          <p><strong>Los balcones que gritan:</strong> Dicen que en las noches de neblina se escuchan voces en los balcones vacíos — los espíritus de los arrieros que paraban aquí en el camino entre Lima y la sierra. No piden nada; solo comentan el precio de la coca y el estado del camino.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CANTA -->
+  <div class="lc" id="l-canta">
+    <div class="lh" onclick="toggleCard('l-canta')">
+      <div class="lhi">⛪</div>
+      <div class="lht">
+        <h3>Canta — La Ciudad Colonial</h3>
+        <p>2,639 msnm · Capital de provincia · Fundada 1540 · <a href="https://www.google.com/maps/search/Canta+Lima+Peru" target="_blank" onclick="event.stopPropagation()" style="color:var(--azul);font-weight:600">📍 Maps</a></p>
+      </div>
+      <div class="lhv">▼</div>
+    </div>
+    <div class="lb">
+      <div class="plato">
+        <div class="plato-emoji">🐟</div>
+        <div class="plato-txt">
+          <strong>Plato bandera: Trucha frita del río Chillón</strong>
+          <span>La trucha del Chillón se pesca el mismo día. Entera, frita en sartén con papas doradas y ensalada de cebolla con ají. También como ceviche (más delicado) o chicharrón. Los mejores restaurantes están frente al río. S/20–25. El domingo el mercado también tiene pachamanca y chicharrón de cuy.</span>
+        </div>
+      </div>
+      <div class="atrac-grid">
+        <div class="atrac"><strong>⛪ Iglesia La Candelaria</strong>Iglesia colonial del s. XVII. Fachada de piedra con campanario. Aún en uso — si coincides con misa, la acústica es notable.</div>
+        <div class="atrac"><strong>🏛️ Plaza de Armas</strong>La plaza tiene pileta colonial original. Lugar de vida local, no turístico. Rodeada de tiendas, restaurantes y la municipalidad.</div>
+        <div class="atrac"><strong>🛒 Mercado (domingos)</strong>Solo domingos: queso serrano, chicharrón de cuy, chancaca, mermeladas, chicha morada casera. Mejor mercado de la zona.</div>
+        <div class="atrac"><strong>🌊 Río Chillón</strong>Restaurantes al borde del río con mesas sobre el agua. La trucha viene directamente de las pozas que ves al fondo.</div>
+      </div>
+      <div class="lsec">
+        <div class="lshd" style="background:var(--verde)">📚 Históricamente preciso</div>
+        <div class="lsbody">
+          <p>Canta fue fundada como reducción colonial española en <strong>1540</strong> bajo el nombre de "San Pedro de Canta". Antes de la conquista, el territorio era dominado por el señorío de los <strong>Atavillos</strong>, cuya capital era Cantamarca (17 km al norte).</p>
+          <p>En 1570, el Virrey Francisco de Toledo aplicó la política de <em>reducciones</em>: los pueblos indígenas dispersos en altura fueron forzados a bajar y concentrarse en pueblos nuevos de trazado español. Canta fue uno de estos centros de concentración — su plaza rectangular y su iglesia central siguen el modelo urbanístico toledano exactamente.</p>
+          <p>El <strong>curacazgo de Canta</strong> fue uno de los más documentados por el cronista Cristóbal de Albornoz durante las campañas de extirpación de idolatrías de la segunda mitad del s. XVI. Los Atavillos resistieron la evangelización más que otros grupos de la región.</p>
+          <p class="src">Fuente: Espinoza Soriano, W. (1963). "La Guaranga y la Reducción de Huancayo". Revista del Museo Nacional, Lima · AGN, Visitas de Toledo 1570–75.</p>
+        </div>
+      </div>
+      <div class="lsec">
+        <div class="lshd" style="background:var(--terra)">🌙 Leyendas</div>
+        <div class="lsbody">
+          <p><strong>El cura que no murió:</strong> Cuentan que el primer cura de Canta era tan devoto que cuando murió su cuerpo no se descompuso. Lo enterraron tres veces en tres lugares distintos y cada vez aparecía de nuevo en el altar de la iglesia. Al cuarto intento ya no intentaron enterrarlo — simplemente lo dejaron donde quería estar.</p>
+          <p><strong>El eco del Chillón:</strong> El río responde a quien le habla de noche. No como un eco normal — dicen que te devuelve lo que necesitas escuchar, no lo que dijiste. Los abuelos canteños lo usan para pedir consejo.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- OBRAJILLO / RUMICHACA -->
+  <div class="lc" id="l-obrajillo">
+    <div class="lh" onclick="toggleCard('l-obrajillo')">
+      <div class="lhi">🏕️</div>
+      <div class="lht">
+        <h3>Obrajillo & Camping Rumichaca</h3>
+        <p>2,600 msnm · Río Chillón · Tu base nocturna · <a href="https://maps.app.goo.gl/gEbiQmph5zZjWpby8" target="_blank" onclick="event.stopPropagation()" style="color:var(--azul);font-weight:600">📍 Maps</a></p>
+      </div>
+      <div class="lhv">▼</div>
+    </div>
+    <div class="lb">
+      <div class="plato">
+        <div class="plato-emoji">🌽</div>
+        <div class="plato-txt">
+          <strong>Desayuno dominical: Humitas y queso fresco de Obrajillo</strong>
+          <span>El domingo por la mañana los puestos de Obrajillo sacan humitas dulces y saladas (tamales de choclo fresco), queso serrano recién cortado y pan artesanal. Con café de olla es el desayuno antes de Lucle.</span>
+        </div>
+      </div>
+      <div class="atrac-grid">
+        <div class="atrac"><strong>🏕️ Camping Rumichaca</strong>S/15/persona. Carpas en césped junto al río. Fogata, baños, zona de parrilla. Llama antes: 992353090.</div>
+        <div class="atrac"><strong>🌊 Piscinas naturales</strong>El río Chillón forma pozas naturales dentro del camping. En junio el agua está fría pero el sol de la tarde permite un chapuzón.</div>
+        <div class="atrac"><strong>🗿 Intipunku</strong>"Portada del Sol" — formación rocosa natural en el cerro sobre el camping. Vista al valle al amanecer.</div>
+        <div class="atrac"><strong>⭐ Cielo nocturno</strong>Sin contaminación lumínica a 2,600 msnm, el cielo de junio es espectacular. Lleva una manta.</div>
+      </div>
+      <div class="lsec">
+        <div class="lshd" style="background:var(--verde)">📚 Históricamente preciso</div>
+        <div class="lsbody">
+          <p><strong>"Obrajillo"</strong> es diminutivo de <em>obraje</em>: los obrajes eran talleres textiles coloniales donde los indígenas eran obligados a trabajar en condiciones duras para producir paños y tejidos destinados al mercado colonial. El nombre del pueblo es un recordatorio cotidiano del sistema de trabajo forzado que operó aquí entre los siglos XVI y XVIII.</p>
+          <p>El pueblo actual fue establecido formalmente el <strong>24 de junio de 1775</strong>, coincidiendo con San Juan Bautista, patrón de muchos pueblos coloniales andinos. La política de reducciones toledanas (1570) dispersó y concentró la población Atavillos de altura hacia este valle.</p>
+          <p class="src">Fuente: Archivo General de la Nación (AGN), documentos coloniales siglos XVI–XVIII.</p>
+        </div>
+      </div>
+      <div class="lsec">
+        <div class="lshd" style="background:var(--morado)">🌙 Leyendas</div>
+        <div class="lsbody">
+          <p><strong>Duendes del camino:</strong> En noches sin luna se ven duendes de sombrero rojo en el cerro. No hacen daño, pero guían (o extravían) hacia tesoros que los Atavillos enterraron antes de la conquista. Si escuchas risas infantiles en el cerro de noche, mejor no investigues.</p>
+          <p><strong>Las sirenas del Chillón:</strong> Las cascadas cercanas tienen "sirinus" andinas — no matan como las griegas, pero hacen que el hombre que llega solo olvide el camino de regreso. La cura es que alguien del grupo lo llame por su nombre tres veces.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CASCADA LUCLE -->
+  <div class="lc" id="l-lucle">
+    <div class="lh" onclick="toggleCard('l-lucle')">
+      <div class="lhi">🌊</div>
+      <div class="lht">
+        <h3>Cascada de Lucle</h3>
+        <p>Cerca de Obrajillo · Río Chillón · Domingo mañana · <a href="https://www.google.com/maps/search/Cascada+de+Lucle+Obrajillo+Canta" target="_blank" onclick="event.stopPropagation()" style="color:var(--azul);font-weight:600">📍 Maps</a></p>
+      </div>
+      <div class="lhv">▼</div>
+    </div>
+    <div class="lb">
+      <div class="atrac-grid">
+        <div class="atrac"><strong>🌊 La cascada</strong>Caída de agua limpia del río Lucle. La base forma pozas naturales de agua fría. En junio el sol de mañana calienta lo suficiente para mojarse.</div>
+        <div class="atrac"><strong>🏊 Nadar / chapuzón</strong>La poza principal tiene fondo visible y es poco profunda. Agua muy fría (glaciar) pero perfecta para 15–20 min si tienes valor.</div>
+        <div class="atrac"><strong>🚗 Acceso</strong>A minutos de Obrajillo en auto. Camino corto y plano desde donde estacionas. Sin trekking significativo.</div>
+        <div class="atrac"><strong>🌅 Domingo AM</strong>A esta hora suele estar vacía. La luz del sol pega directa en la cascada entre las 9–11 am — ideal para fotos.</div>
+      </div>
+      <div class="lsec">
+        <div class="lshd" style="background:var(--azul)">📚 En contexto</div>
+        <div class="lsbody">
+          <p>La cascada de Lucle es parte del sistema hidrográfico del río Chillón, que nace en la Cordillera de La Viuda y desciende hacia el Pacífico. El Chillón alimenta el valle agrícola que has visto durante todo el viaje de subida.</p>
+          <p>Las comunidades de Obrajillo y Canta han usado históricamente las pozas y caídas de agua del Chillón tanto para riego como para la crianza de trucha. El sistema de acequias prehispánicas sigue siendo visible en partes del valle.</p>
+        </div>
+      </div>
+      <div class="lsec">
+        <div class="lshd" style="background:var(--piedra)">🌙 Lo que se dice</div>
+        <div class="lsbody">
+          <p><strong>El agua que sana el viaje:</strong> Los locales dicen que bañarse en Lucle el último día de un viaje "lava" el cansancio y los malos pensamientos que acumulaste en la carretera. No sé si el agua glaciar cura el alma, pero el choque térmico definitivamente despierta.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CANTAMARCA -->
+  <div class="lc" id="l-cantamarca">
+    <div class="lh" onclick="toggleCard('l-cantamarca')">
+      <div class="lhi">🏛️</div>
+      <div class="lht">
+        <h3>Cantamarca — Ciudadela Atavillos <span style="background:#FFF3CD;color:#B5882A;font-size:10px;padding:1px 7px;border-radius:6px;font-weight:700;margin-left:4px">HIDDEN GEM</span></h3>
+        <p>3,660 msnm · 17 km de Canta · Ingreso libre · 🥾 1h subida · difícil · 3–4h total · <a href="https://www.google.com/maps/search/Cantamarca+Canta+Lima" target="_blank" onclick="event.stopPropagation()" style="color:var(--azul);font-weight:600">📍 Maps</a></p>
+      </div>
+      <div class="lhv">▼</div>
+    </div>
+    <div class="lb">
+      <div class="atrac-grid">
+        <div class="atrac"><strong>🏛️ Estructuras Atavillos</strong>Construcciones circulares y rectangulares con columnas centrales. Estilo inconfundible — no lo verás en otro sitio cerca de Lima.</div>
+        <div class="atrac"><strong>🏺 Colcas incas</strong>24 almacenes de arquitectura inca añadidos tras la conquista del Tawantinsuyu ~1450. Puedes ver exactamente dónde termina la ciudad Atavillos y dónde empiezan las adiciones incas.</div>
+        <div class="atrac"><strong>🌄 Vista panorámica</strong>Desde la cima se ve todo el valle del Chillón y los nevados del norte. La luz de mañana es mejor para fotografía.</div>
+        <div class="atrac"><strong>👤 Sin turistas</strong>Patrimonio Cultural declarado en 2006, pero muy pocos lo visitan. Es probable que estés solo o casi solo.</div>
+      </div>
+      <div class="lsec">
+        <div class="lshd" style="background:var(--morado)">📚 Históricamente preciso</div>
+        <div class="lsbody">
+          <p>Cantamarca fue la capital del <strong>curacazgo de Canta</strong> durante el Período Intermedio Tardío (~1100–1450 d.C.). Los <strong>Atavillos</strong> eran un pueblo serrano que construía sus asentamientos en cimas escarpadas como estrategia defensiva — técnica conocida como <em>llaqta</em> de altura.</p>
+          <p>Hacia <strong>1450–1470 d.C.</strong>, los Incas bajo Túpac Yupanqui incorporaron el territorio al Tawantinsuyu. La integración fue negociada más que militar: los curacas Atavillos mantuvieron sus posiciones a cambio de obediencia y tributo. Los Incas añadieron las 24 colcas (qollqa) sobre la ciudad existente — diferencia arquitectónica visible a simple vista: las colcas incas son rectangulares y están alineadas en calle central, mientras que las estructuras Atavillos son circulares y sin alineación clara.</p>
+          <p>El sitio fue abandonado ca. <strong>1550</strong>, cuando los españoles aplicaron las reducciones toledanas y forzaron a la población a bajar al valle. Declarado Patrimonio Cultural de la Nación por Resolución INC N° 051-2006.</p>
+          <p class="src">Fuente: INC Resolución 051-2006 · Rostworowski, M. (1978). Señoríos indígenas de Lima y Canta. IEP · Espinoza Soriano, W. (1963).</p>
+        </div>
+      </div>
+      <div class="lsec">
+        <div class="lshd" style="background:var(--terra)">🌙 Leyendas</div>
+        <div class="lsbody">
+          <p><strong>El mapa en las colcas:</strong> El patrón de disposición de las 24 colcas no es al azar — es un mapa hacia la cámara del tesoro Atavillos enterrado antes de la llegada inca. Decenas de huaqueros han intentado descifrar el patrón. Nadie reporta haberlo encontrado.</p>
+          <p><strong>El observatorio:</strong> Algunos guías locales afirman que Cantamarca era un observatorio astronómico inca de precisión extrema. Hay alineaciones solares reales en el sitio (confirmadas), pero si fueron diseñadas con intención astronómica o son coincidencia arquitectónica sigue siendo debatido por los arqueólogos.</p>
+          <p><strong>El último curaca:</strong> El último curaca de los Atavillos, antes de bajar al valle, enterró una vasija con semillas sagradas en algún punto de la ciudadela. "Para que el pueblo pueda volver a sembrar cuando regrese." Nadie ha vuelto a sembrar allí.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CULLHUAY -->
+  <div class="lc" id="l-cullhuay">
+    <div class="lh" onclick="toggleCard('l-cullhuay')">
+      <div class="lhi">🍲</div>
+      <div class="lht">
+        <h3>Cullhuay — La Puerta de las Lagunas</h3>
+        <p>4,050 msnm · Distrito de Huaros · Acceso a Laguna 7 Colores y Chuchún · <a href="https://www.google.com/maps/search/Cullhuay+Huaros+Canta+Lima" target="_blank" onclick="event.stopPropagation()" style="color:var(--azul);font-weight:600">📍 Maps</a></p>
+      </div>
+      <div class="lhv">▼</div>
+    </div>
+    <div class="lb">
+      <div class="plato">
+        <div class="plato-emoji">🍲</div>
+        <div class="plato-txt">
+          <strong>Plato bandera: Caldo de cordero + Trucha frita a 4,000 msnm</strong>
+          <span>Los puestos comunales de Cullhuay sirven caldo de cordero caliente (con papas nativas y hierbas andinas) y trucha frita. A 4,050 msnm el cuerpo lo necesita. Es el almuerzo perfecto antes de subir a las lagunas. S/12–18.</span>
+        </div>
+      </div>
+      <div class="atrac-grid">
+        <div class="atrac"><strong>🌊 Punto de acceso</strong>Desde Cullhuay parten los caminos a Laguna Calancayo (7 Colores) y Laguna Chuchún. El auto llega hasta cerca.</div>
+        <div class="atrac"><strong>🏘️ Comunidad viva</strong>Pueblo pequeño pero activo: pastoreo de alpacas y llamas, pequeña ganadería. Puedes ver el estilo de vida altoandino sin afectarlo.</div>
+        <div class="atrac"><strong>🦙 Fauna</strong>Llamas y alpacas pastando cerca del camino. Vicuñas en las zonas más altas. Patos silvestres en las lagunas.</div>
+      </div>
+      <div class="lsec">
+        <div class="lshd" style="background:var(--azul)">📚 Históricamente preciso</div>
+        <div class="lsbody">
+          <p>Cullhuay es parte del distrito de Huaros, provincia de Canta. La zona de la Cordillera de La Viuda fue territorio de los <strong>Atavillos de altura</strong> — una rama del mismo señorío que habitaba Cantamarca, pero adaptada a la vida por encima de los 4,000 msnm.</p>
+          <p>Las comunidades altoandinas de esta zona han mantenido ininterrumpidamente la crianza de camélidos (llamas y alpacas) desde antes de la conquista inca. El sistema de pastoreo rotativo que se ve hoy es heredero directo de las prácticas pre-colombinas de manejo del territorio de puna.</p>
+          <p>La Cordillera de La Viuda sirve como divisoria de aguas: hacia el oeste drenan ríos hacia el Pacífico (Chillón); hacia el este hacia el Atlántico. Estás literalmente en el techo de la cuenca Lima.</p>
+          <p class="src">Fuente: INEI (2017). Censos nacionales · Municipalidad de Huaros, provincia de Canta.</p>
+        </div>
+      </div>
+      <div class="lsec">
+        <div class="lshd" style="background:var(--piedra)">🌙 Lo que se dice</div>
+        <div class="lsbody">
+          <p><strong>Pago a la Pachamama:</strong> Antes de subir a las lagunas, algunos guías locales deraman chicha en la tierra — el <em>pago</em> o <em>despacho</em> a la Pachamama para pedir permiso y protección. No es actuación para turistas: es práctica real y cotidiana en estas comunidades.</p>
+          <p><strong>La llama blanca del nevado:</strong> Cuentan que en las noches de luna llena una llama completamente blanca baja del nevado y bebe en las lagunas. Verla trae suerte en el ganado. Molestarla o seguirla, la peor de las suertes.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LAGUNA 7 COLORES -->
+  <div class="lc" id="l-laguna">
+    <div class="lh" onclick="toggleCard('l-laguna')">
+      <div class="lhi">🎨</div>
+      <div class="lht">
+        <h3>Laguna de los 7 Colores (Calancayo) + Laguna Chuchún</h3>
+        <p>4,800 msnm · Cordillera de La Viuda · <a href="https://maps.app.goo.gl/FxcDLgTwx9M4jnY3A" target="_blank" onclick="event.stopPropagation()" style="color:var(--azul);font-weight:600">📍 Maps Calancayo</a></p>
+      </div>
+      <div class="lhv">▼</div>
+    </div>
+    <div class="lb">
+      <div class="atrac-grid">
+        <div class="atrac"><strong>🎨 7 colores</strong>Turquesa, verde, azul, añil, gris, blanco, negro. Los colores cambian con el ángulo del sol. Quédate 30–40 min para ver la diferencia.</div>
+        <div class="atrac"><strong>🏔️ Nevado La Viuda</strong>5,140 msnm, visible desde ambas lagunas. En Chuchún el nevado se refleja en el agua cuando hay calma.</div>
+        <div class="atrac"><strong>🌡️ Temperatura</strong>Puede hacer 3–7°C incluso al mediodía en junio. El viento baja la sensación. Lleva todo el abrigo que tienes.</div>
+        <div class="atrac"><strong>🦆 Fauna lacustre</strong>Patos andinos, chorlos, y ocasionalmente huallatas (gansos andinos). El borde de las lagunas tiene vegetación de totora.</div>
+      </div>
+      <div class="lsec">
+        <div class="lshd" style="background:var(--azul)">📚 Históricamente preciso</div>
+        <div class="lsbody">
+          <p>Los colores de la laguna Calancayo son producto de la combinación de <strong>minerales en suspensión</strong> (principalmente óxidos de hierro y cobre), <strong>algas microscópicas</strong> (cianobacterias y algas verdes) y el <strong>ángulo de la luz solar</strong> sobre el agua. No hay magia — es óptica, química y biología lacustre.</p>
+          <p>El Nevado de La Viuda (5,140 msnm) actúa como el principal <strong>reservorio hídrico</strong> de la cuenca alta del Chillón. Su deshielo alimenta las lagunas, los ríos y el sistema de riego que llega hasta Lima. La reducción del glaciar por el cambio climático es un problema documentado y activo.</p>
+          <p>El mito de Wakón y La Viuda fue recopilado y documentado en <strong>1925</strong> por el arqueólogo Pedro Villar Córdova — uno de los mitos andinos más importantes del departamento de Lima.</p>
+          <p class="src">Fuente: Villar Córdova, P. (1925). Arqueología del departamento de Lima. Lima · SENAMHI, Boletín hidrológico de la cuenca del Chillón.</p>
+        </div>
+      </div>
+      <div class="lsec">
+        <div class="lshd" style="background:var(--morado)">🌙 El mito de La Viuda</div>
+        <div class="lsbody">
+          <p>El dios monstruoso <strong>Wakón</strong> persiguió a Pachamama, la devoró y cayó en el lago. Pero no pudo digerirla — su cuerpo emergió en la cima del nevado, donde Pachamama quedó abandonada en el frío eterno. Por eso el nevado se llama "La Viuda": es el cuerpo de Pachamama olvidado en la cumbre.</p>
+          <p>Sus hijos gemelos, <strong>Los Willcas</strong>, quedaron huérfanos en el valle. Son los ancestros de los pueblos Atavillos. Cuando la laguna cambia de color de repente en un día sin nubes, los comuneros dicen que es Pachamama que respira.</p>
+          <p><strong>Pago antes de subir:</strong> Tradición viva. Derramas chicha, hojas de coca o flores en la orilla antes de entrar al espejo de agua. "Para que te deje mirar."</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- POMORA -->
+  <div class="lc" id="l-pomora">
+    <div class="lh" onclick="toggleCard('l-pomora')">
+      <div class="lhi">🌊</div>
+      <div class="lht">
+        <h3>Cascada de Pomora "Las Mellizas"</h3>
+        <p>4,000 msnm · Km 137 carretera Cerro de Pasco · Sin trekking · <a href="https://maps.app.goo.gl/CrJxQjmCYr1DyiCt7" target="_blank" onclick="event.stopPropagation()" style="color:var(--azul);font-weight:600">📍 Maps</a></p>
+      </div>
+      <div class="lhv">▼</div>
+    </div>
+    <div class="lb">
+      <div class="atrac-grid">
+        <div class="atrac"><strong>🌊 Las 8 cascadas</strong>10 m de caída total en 8 cascadas escalonadas. Las 4 superiores se ven desde la carretera; las 4 inferiores con un paseo de 5–10 min en llano.</div>
+        <div class="atrac"><strong>🦙 Fauna</strong>Llamas y alpacas pastando alrededor. Ocasionalmente vicuñas. Si te quedas quieto y callado, se acercan.</div>
+        <div class="atrac"><strong>❄️ Origen glaciar</strong>El agua viene del deshielo del Nevado Colac. Cristalina, fría y con un sonido constante. Buen lugar para descansar antes o después de las lagunas.</div>
+        <div class="atrac"><strong>🚗 Acceso</strong>Visible desde la carretera principal. No requiere trekking — estacionas en ensanchamiento y caminas 5–10 min en terreno plano.</div>
+      </div>
+      <div class="lsec">
+        <div class="lshd" style="background:var(--verde2)">📚 Históricamente preciso</div>
+        <div class="lsbody">
+          <p>La cascada de Pomora forma parte del sistema hídrico del nevado Colac, afluente de la Cordillera de La Viuda. Sus aguas desembocan en el río Chillón. Altitud: 4,000 msnm, distrito de Huaros, provincia de Canta.</p>
+          <p>El nombre "Las Mellizas" viene de la forma doble que presenta cuando el caudal es alto (época de lluvias, noviembre–abril). En junio el caudal es menor pero el agua está más clara.</p>
+          <p class="src">Fuente: Agencia Andina (2014) · MINCETUR Ficha N° 1851.</p>
+        </div>
+      </div>
+      <div class="lsec">
+        <div class="lshd" style="background:var(--dorado)">🌙 Leyendas</div>
+        <div class="lsbody">
+          <p><strong>Las mellizas que garantizan gemelos:</strong> Quien recibe la bendición del agua de Las Mellizas tiene garantizado concebir mellizos. Mujeres de las comunidades del valle hacen peregrinaciones con este propósito, especialmente en agosto. No hay propiedad genética especial en el agua glaciar, pero la tradición está muy viva.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ══ GASTRONOMÍA ══ -->
+<div id="tab-gastro" class="content">
+  <div class="tip g" style="margin-bottom:14px"><div class="ti">💡</div><div><strong>Lleva efectivo.</strong> No hay cajeros después de Carabayllo. S/200–300/persona mínimo. Los restaurantes junto al río en Canta y Obrajillo son los mejores.</div></div>
+
+  <div class="sec-title">En ruta · Valle Bajo del Chillón</div>
+  <div class="food-grid">
+    <div class="fcard verde">
+      <div class="fn">🫔 Tamales canteños · Yaso</div>
+      <div class="fd">Masa de maíz densa, relleno de pollo o cerdo con ají panca. Diferentes a los limeños. El desayuno oficial del camino a Canta.</div>
+      <div class="fp">S/3–5 c/u</div>
+    </div>
+    <div class="fcard verde">
+      <div class="fn">🥩 Chicharrón con camote · Yaso</div>
+      <div class="fd">Cerdo frito con camote dorado andino. Se sirve al borde de la carretera desde las 7am. Contundente para el viaje de subida.</div>
+      <div class="fp">S/8–12</div>
+    </div>
+    <div class="fcard verde">
+      <div class="fn">☕ Café de olla</div>
+      <div class="fd">Café hervido con canela y clavo. Nada que ver con el café de Lima. Los puestos de ruta lo tienen desde temprano.</div>
+      <div class="fp">S/2–3</div>
+    </div>
+  </div>
+
+  <div class="sec-title">En altura · Cullhuay (4,050 msnm)</div>
+  <div class="food-grid">
+    <div class="fcard">
+      <div class="fn">🍲 Caldo de cordero</div>
+      <div class="fd">Caldo caliente con papas nativas, hierbas andinas y carne de cordero. Lo necesitas antes de subir a 4,800 msnm. Los puestos comunales lo tienen fresco.</div>
+      <div class="fp">S/10–15</div>
+    </div>
+    <div class="fcard">
+      <div class="fn">🐟 Trucha frita a la altura</div>
+      <div class="fd">La misma trucha del Chillón, pero comida a 4,050 msnm con vista al nevado. La experiencia cambia el sabor.</div>
+      <div class="fp">S/15–20</div>
+    </div>
+  </div>
+
+  <div class="sec-title">En Canta & Obrajillo · El clásico de trucha</div>
+  <div class="food-grid">
+    <div class="fcard">
+      <div class="fn">🐟 Trucha frita del Chillón</div>
+      <div class="fd">Entera, frita ese mismo día, con papas doradas y ensalada de cebolla. El plato bandera de la zona. Pide "al sartén" para piel crujiente.</div>
+      <div class="fp">S/20–25</div>
+    </div>
+    <div class="fcard">
+      <div class="fn">🍋 Ceviche de trucha</div>
+      <div class="fd">Más delicado que el marino. La trucha aguanta bien el limón. Ideal para mediodía en los restaurantes frente al río.</div>
+      <div class="fp">S/18–22</div>
+    </div>
+    <div class="fcard">
+      <div class="fn">🔥 Chicharrón de trucha</div>
+      <div class="fd">Trozos fritos con ajo y limón. Más rústico. Perfecto como almuerzo final del domingo antes de bajar.</div>
+      <div class="fp">S/20–25</div>
+    </div>
+    <div class="fcard">
+      <div class="fn">🐾 Chicharrón de cuy</div>
+      <div class="fd">Solo domingos en el mercado de Canta. Sabor intenso, piel crujiente. No es para todos, pero es 100% local.</div>
+      <div class="fp">S/15–20</div>
+    </div>
+    <div class="fcard">
+      <div class="fn">🥘 Pachamanca</div>
+      <div class="fd">Res, cerdo y pollo cocidos bajo tierra con piedras calientes. Se hace bajo pedido en algunos recreos. Pregunta el día anterior si quieres reservar.</div>
+      <div class="fp">S/25–35</div>
+    </div>
+    <div class="fcard">
+      <div class="fn">☕ Mate de coca</div>
+      <div class="fd">Antes de subir a 3,500+ msnm. Algunos restaurantes lo dan gratis. No negociable si es tu primera vez en altura.</div>
+      <div class="fp">S/2 o gratis</div>
+    </div>
+    <div class="fcard verde">
+      <div class="fn">🌽 Humitas del domingo · Obrajillo</div>
+      <div class="fd">Choclo fresco rallado, relleno dulce o salado, envuelto en hoja. El desayuno del domingo en Obrajillo antes de Lucle.</div>
+      <div class="fp">S/3–5</div>
+    </div>
+    <div class="fcard verde">
+      <div class="fn">🫐 Chicha morada local</div>
+      <div class="fd">La versión serrana: menos azúcar, más especias. Diferente a la de Lima. S/3–5 el vaso en cualquier puesto.</div>
+      <div class="fp">S/3–5</div>
+    </div>
+  </div>
+
+  <div class="sec-title">Remate · Lima · Domingo</div>
+  <div class="food-grid">
+    <div class="fcard" style="border-top-color:#222">
+      <div class="fn">🍔 Smash N' Go — Lima</div>
+      <div class="fd">Tu destino final. Sal de Canta a las 11–12 del domingo y llegas a Lima entre 1:30–2:30 pm — hora perfecta. El mejor cierre.</div>
+      <div class="fp"><a href="https://maps.app.goo.gl/fxCkSBshexirmhSK7" target="_blank" style="color:var(--azul)">📍 Ver en Maps</a></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ CHECKLIST ══ -->
+<div id="tab-checklist" class="content">
+
+  <div class="tip r" style="margin-bottom:14px"><div class="ti">🔴</div><div><strong>Crítico:</strong> No hay cajeros después de Carabayllo. Lleva <strong>S/200–300 por persona en efectivo</strong>. La señal se pierde después de Canta — descarga Maps offline antes de salir.</div></div>
+
+  <div class="cs">
+    <div class="ct">🏕️ Camping</div>
+    <div class="cg">
+      <label class="ci"><input type="checkbox" onchange="toggleDone(this)"> Carpa (Rumichaca alquila S/35–45)</label>
+      <label class="ci"><input type="checkbox" onchange="toggleDone(this)"> Saco de dormir 0°C o menos</label>
+      <label class="ci"><input type="checkbox" onchange="toggleDone(this)"> Colchoneta / mat</label>
+      <label class="ci"><input type="checkbox" onchange="toggleDone(this)"> Linterna frontal + pilas extra</label>
+      <label class="ci"><input type="checkbox" onchange="toggleDone(this)"> Encendedor / fósforos</label>
+      <label class="ci"><input type="checkbox" onchange="toggleDone(this)"> Parrilla (camping alquila S/15–25)</label>
+    </div>
+  </div>
+
+  <div class="cs">
+    <div class="ct">🧥 Ropa — 3 capas para 4,800 msnm</div>
+    <div class="cg">
+      <label class="ci"><input type="checkbox" onchange="toggleDone(this)"> Térmica / base layer</label>
+      <label class="ci"><input type="checkbox" onchange="toggleDone(this)"> Polar / forro</label>
+      <label class="ci"><input type="checkbox" onchange="toggleDone(this)"> Cortaviento impermeable</label>
+      <label class="ci"><input type="checkbox" onchange="toggleDone(this)"> Gorro de lana</label>
+      <label class="ci"><input type="checkbox" onchange="toggleDone(this)"> Guantes</label>
+      <label class="ci"><input type="checkbox" onchange="toggleDone(this)"> Gafas de sol UV alta</label>
+      <label class="ci"><input type="checkbox" onchange="toggleDone(this)"> Protector solar SPF 50+</label>
+      <label class="ci"><input type="checkbox" onchange="toggleDone(this)"> Botas / zapatillas de trail</label>
+    </div>
+  </div>
+
+  <div class="cs">
+    <div class="ct">🏥 Salud y Altitud</div>
+    <div class="cg">
+      <label class="ci"><input type="checkbox" onchange="toggleDone(this)"> Mate de coca / pastillas soroche</label>
+      <label class="ci"><input type="checkbox" onchange="toggleDone(this)"> Ibuprofeno / paracetamol</label>
+      <label class="ci"><input type="checkbox" onchange="toggleDone(this)"> Botiquín básico</label>
+      <label class="ci"><input type="checkbox" onchange="toggleDone(this)"> Agua: mínimo 2 L/persona</label>
+      <label class="ci"><input type="checkbox" onchange="toggleDone(this)"> Snacks energéticos</label>
+    </div>
+  </div>
+
+  <div class="cs">
+    <div class="ct">📋 Logística</div>
+    <div class="cg">
+      <label class="ci"><input type="checkbox" onchange="toggleDone(this)"> DNI / pasaporte</label>
+      <label class="ci"><input type="checkbox" onchange="toggleDone(this)"> Efectivo S/200–300 mín. por persona</label>
+      <label class="ci"><input type="checkbox" onchange="toggleDone(this)"> Camping reservado: 992353090</label>
+      <label class="ci"><input type="checkbox" onchange="toggleDone(this)"> Powerbank cargado</label>
+      <label class="ci"><input type="checkbox" onchange="toggleDone(this)"> Maps offline: Canta + Huaros</label>
+      <label class="ci"><input type="checkbox" onchange="toggleDone(this)"> Playlist descargada</label>
+    </div>
+  </div>
+
+  <div class="cs">
+    <div class="ct">🚗 Auto</div>
+    <div class="cg">
+      <label class="ci"><input type="checkbox" onchange="toggleDone(this)"> Tanque lleno desde Lima</label>
+      <label class="ci"><input type="checkbox" onchange="toggleDone(this)"> Agua para el radiador</label>
+      <label class="ci"><input type="checkbox" onchange="toggleDone(this)"> Llanta de repuesto + llave</label>
+    </div>
+  </div>
+
+  <div style="text-align:center;margin-top:24px;background:white;border-radius:14px;padding:18px;box-shadow:0 1px 4px rgba(0,0,0,.07)">
+    <div style="font-size:26px;margin-bottom:5px">🏔️</div>
+    <div style="font-weight:800;color:var(--verde)">Buen viaje, Luan.</div>
+    <div style="color:var(--gris);font-size:13px;margin-top:3px">Que la Pachamama te cuide en el camino.</div>
+    <div style="color:var(--piedra);font-size:12px;margin-top:7px">Camping · 992353090 · Sal 6am · Smash N' Go el domingo</div>
+  </div>
+</div>
+
+<script>
+function showTab(name, el) {
+  document.querySelectorAll('.content').forEach(c=>c.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('tab-'+name).classList.add('active');
+  el.classList.add('active');
+}
+function toggleCard(id) {
+  document.getElementById(id).classList.toggle('open');
+}
+function toggleDone(cb) {
+  cb.closest('.ci').classList.toggle('done', cb.checked);
+}
+</script>
+</body>
+</html>
